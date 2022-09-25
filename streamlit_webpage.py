@@ -2,9 +2,6 @@ import streamlit as st
 import pandas as pd 
 import plotly.graph_objects as go
 import plotly_express as px
-# import numpy as np
-# import helper as mylib
-# import matplotlib.pyplot as plt
 
 @st.cache(allow_output_mutation=True)
 def read_data():
@@ -127,8 +124,6 @@ with visualization4:
                 .groupby(['year'])
             .sum().reset_index()
            )
-    years_votes_li= ['1900','1910','1920','1930','1940','1950',
-     '1960','1970','1980','1990','2000', '2010','2020', ]
 
     years_selector= st.slider(
     'Select the generation of movies you want to check',
@@ -137,7 +132,8 @@ with visualization4:
     start,end= years_selector
     # years_selector= st.selectbox('Choose the start year you want to start from:', options= years_votes_li)
     # st.text('For better visualization, kindly choose years where the difference is no more than 20 years')
-        
+    start= int(start)
+    end= int(end)
     votes_df['year']=votes_df['year'].astype('int')
     vote_20= votes_df[(votes_df['year']>=start) & (votes_df['year']<=end)]
     maxim= max(vote_20['votes'])
@@ -186,5 +182,4 @@ with visualization5:
     else:
         st.text('Please select the years for better visulization')
 
-        
-
+       
