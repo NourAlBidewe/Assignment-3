@@ -5,7 +5,10 @@ import plotly_express as px
 
 @st.cache(allow_output_mutation=True)
 def read_data():
-    df= pd.read_csv("IMDb movies.csv")
+    df1= pd.read_csv("IMDb movies.csv")
+    df2= pd.read_csv('IMDb movies2.csv')
+    
+    df= pd.concat([df1,df2])
     df.replace("TV Movie 2019", 
            "2019", 
            inplace=True)
@@ -134,7 +137,9 @@ with visualization4:
     # st.text('For better visualization, kindly choose years where the difference is no more than 20 years')
     start= int(start)
     end= int(end)
-    votes_df['year']=votes_df['year'].astype('int')
+    # votes_df['year']=votes_df['year'].astype('int')
+    votes_df['year']=pd.to_numeric(votes_df['year'], downcast="integer")
+
     vote_20= votes_df[(votes_df['year']>=start) & (votes_df['year']<=end)]
     maxim= max(vote_20['votes'])
     vote_20['year']=vote_20['year'].astype('str')
@@ -181,5 +186,3 @@ with visualization5:
         st.plotly_chart(duration_fig)
     else:
         st.text('Please select the years for better visulization')
-
-       
